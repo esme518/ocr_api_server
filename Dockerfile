@@ -8,12 +8,11 @@ RUN set -ex \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && pip list \
-    && rm -rf /tmp/* /root/.cache/* \
     && apt-get --allow-releaseinfo-change update && apt install -y \
        libgl1-mesa-glx libglib2.0-0 tini \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
 EXPOSE 9898
 
