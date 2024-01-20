@@ -1,10 +1,12 @@
-FROM python:3.8-slim-buster
+FROM python:3.8-slim
 
-COPY ./*.txt ./*.py ./*.sh ./*.onnx /app/
+ENV PYTHONUNBUFFERED=1
 
+COPY ./*.txt ./*.py /app/
 WORKDIR /app
 
 RUN set -ex \
+    && export PYTHONDONTWRITEBYTECODE=1 \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && pip list \
@@ -17,4 +19,4 @@ RUN set -ex \
 EXPOSE 9898
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["python3","ocr_server.py","--port","9898","--ocr","--det"]
+CMD ["python","ocr_server.py","--port","9898","--ocr","--det"]
